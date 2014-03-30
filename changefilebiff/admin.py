@@ -32,12 +32,12 @@ class ChangefileBiffAdminPage(Component):
             # in detail view
             if req.method == 'POST':
                 if req.args.get('save') and \
-                   self._validate_update(req, biff_config):
+                   self._validate_update(req, biff_key, biff_config):
                     biff_config.update(req.authname, req.args, biff_key)
                     self._add_notice_saved(req)
+                    req.redirect(req.href.admin(cat, page))
                 elif req.args.get('cancel'):
-                    pass
-                req.redirect(req.href.admin(cat, page))
+                    req.redirect(req.href.admin(cat, page))
 
             biff = biff_config.biff[biff_key]
             return template, {'view': 'detail', 'biff': biff}
@@ -45,7 +45,7 @@ class ChangefileBiffAdminPage(Component):
         # in list view
         if req.method == 'POST':
 
-            if req.args.get('add') and self._validate_update(req, biff_config):
+            if req.args.get('add') and self._validate_add(req, biff_config):
                 biff_config.add(req.args)
                 self._add_notice_saved(req)
                 req.redirect(req.href.admin(cat, page))
@@ -60,21 +60,33 @@ class ChangefileBiffAdminPage(Component):
                     self._add_notice_removed(req)
                     req.redirect(req.href.admin(cat, page))
                 else:
-                    add_warning(req, _('No biff configuration selected'))
+                    add_warning(req, _('No Biff configuration selected.'))
 
         biff_values = biff_config.biff.values()
-        return template, {'view': 'list', 'biff_values': biff_values}
+        return template, {'view': 'list',
+                          'biff': biff_config.get_i18n_message_catalog(),
+                          'biff_values': biff_values}
 
-    def _validate_update(self, req, biff_config):
+    def _validate_add(self, req, biff_config):
+        biff_values = biff_config.biff.values()
+        return self._validate_common(req, biff_values)
+
+    def _validate_update(self, req, biff_key, biff_config):
+        func = lambda x: x['key'] != biff_key
+        biff_values = filter(func, biff_config.biff.values())
+        return self._validate_common(req, biff_values)
+
+    def _validate_common(self, req, biff_values):
         label = req.args.get('label')
         cc = req.args.get('cc')
         filename = req.args.get('filename')
 
         if not (label and filename):
-            add_warning(req, _('Whitespace is not allowed for the label'))
+            add_warning(req, _('Label and Filename is required.'))
+            return False
 
         if whitespace in label:
-            add_warning(req, _('Whitespace is not allowed for the label'))
+            add_warning(req, _('Whitespace is not allowed for the label.'))
             return False
 
         if cc:
@@ -82,13 +94,13 @@ class ChangefileBiffAdminPage(Component):
             cc_users = [_u.strip() for _u in cc.split(',')]
             for user in cc_users:
                 if user not in all_users:
-                    add_warning(req, _("The user '%s' is not existed" % user))
+                    _msg = _("The user '%(user)s' is not existed.", user=user)
+                    add_warning(req, _msg)
                     return False
 
-        biff_values = biff_config.biff.values()
         biff_labels = map(lambda x: x['label'], biff_values)
         if label in biff_labels:
-            add_warning(req, _('The label is already used'))
+            add_warning(req, _('The label is already used.'))
             return False
 
         multiple_fields = ['filename']
@@ -104,7 +116,8 @@ class ChangefileBiffAdminPage(Component):
         fvalues = [_f.strip() for _f in req.args.get(field_name).split(',')]
         for fvalue in fvalues:
             if fvalue in biff_fvalues:
-                _msg = _("The value '%s' is already configured" % fvalue)
+                _msg = _("The value '%(fvalue)s' is already configured.",
+                         fvalue=fvalue)
                 add_warning(req, _msg)
                 return False
         return True
@@ -114,7 +127,7 @@ class ChangefileBiffAdminPage(Component):
         add_notice(req, (dgettext)(_msg, 'Your changes have been saved.'))
 
     def _add_notice_removed(self, req):
-        add_notice(req, _("The selected biff settings have been removed."))
+        add_notice(req, _("The selected Biff settings have been removed."))
 
     # ITemplateProvider methods
     def get_templates_dirs(self):

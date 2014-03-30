@@ -12,14 +12,16 @@ from trac.util.translation import domain_functions
 from trac.versioncontrol.api import IRepositoryChangeListener
 from tracopt.ticket.commit_updater import CommitTicketUpdater
 
+
+add_domain, _, N_, gettext, ngettext, tag_ = domain_functions(
+    'changefilebiff', ('add_domain', '_', 'N_', 'gettext', 'ngettext', 'tag_'))
+
+
 from model import ChangefileBiffConfig
 from model import FileBiffTicketCustomField
 
 
 __all__ = ['ChangefileBiffModule', 'ChangefileBiffRepositoryChangeListener']
-
-add_domain, _, N_, gettext, ngettext, tag_ = domain_functions(
-    'changefilebiff', ('add_domain', '_', 'N_', 'gettext', 'ngettext', 'tag_'))
 
 
 class ChangefileBiffModule(Component):
@@ -46,15 +48,15 @@ class ChangefileBiffRepositoryChangeListener(Component):
     implements(IRepositoryChangeListener)
 
     def changeset_added(self, repos, changeset):
-        biff_labels = self._get_biff_labels(changeset)
+        biff_labels, biff_cc = self._get_biff_labels_and_cc(changeset)
         if biff_labels:
-            self._update_ticket(changeset, biff_labels)
+            self._update_ticket(changeset, biff_labels, biff_cc)
 
     def changeset_modified(self, repos, changeset, old_changeset):
         pass
 
-    def _get_biff_labels(self, changeset):
-        biff_labels = set()
+    def _get_biff_labels_and_cc(self, changeset):
+        biff_labels, biff_cc = set(), set()
         biff_config = ChangefileBiffConfig(self.env, self.config)
         for biff in biff_config.biff.values():
             biff_filenames = [_f.strip() for _f in biff['filename'].split(',')]
@@ -63,9 +65,10 @@ class ChangefileBiffRepositoryChangeListener(Component):
                     # chg is (path, kind, change, base_path, base_rev)
                     if fnmatch.fnmatch(chg[0], filename):
                         biff_labels.add(biff['label'])
-        return biff_labels
+                        biff_cc.add(biff['cc'])
+        return biff_labels, biff_cc
 
-    def _update_ticket(self, changeset, biff_labels):
+    def _update_ticket(self, changeset, biff_labels, biff_cc):
         ticket_updator = self.env.compmgr.components.get(CommitTicketUpdater)
         if not ticket_updator:
             self.env.log.error('CommitTicketUpdater is not available, '
@@ -85,6 +88,8 @@ class ChangefileBiffRepositoryChangeListener(Component):
                         if cmd(ticket, changeset, ticket_perm) is not False:
                             has_permission = True
                     if has_permission:
+                        cc_list = ', ' + ', '.join(biff_cc)
+                        ticket['cc'] += cc_list
                         fb_field = FileBiffTicketCustomField(ticket)
                         fb_field.add(biff_labels)
                         if fb_field.is_updated:

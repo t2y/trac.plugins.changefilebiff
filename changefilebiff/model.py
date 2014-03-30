@@ -7,6 +7,8 @@ from trac.util import hex_entropy
 from trac.util.datefmt import utc
 from trac.util.text import exception_to_unicode
 
+from api import _
+
 
 class ChangefileBiffConfig(object):
     """Configuration model to handle File Biff settings."""
@@ -15,9 +17,9 @@ class ChangefileBiffConfig(object):
     BIFF_KEYS = 'biff_keys'
     BIFF_OPTION = 'biff.%s.%s'  # biff.$key.$field_name
     BIFF_FIELDS = [
-        {'name': 'label', 'multiple': False},
-        {'name': 'cc', 'multiple': True},
-        {'name': 'filename', 'multiple': True},
+        {'name': 'label', 'multiple': False, 'i18n': _('Label')},
+        {'name': 'cc', 'multiple': True, 'i18n': _('Cc')},
+        {'name': 'filename', 'multiple': True, 'i18n': _('Filename')},
     ]
 
     def __init__(self, env, config):
@@ -44,12 +46,18 @@ class ChangefileBiffConfig(object):
                 name = field['name']
                 option = self.BIFF_OPTION % (key, name)
                 biff[key][name] = get_value(option, field['multiple'])
-
+                biff[key][name + '_i18n'] = field['i18n']
         return biff
 
     @property
     def new_biff_key(self):
         return hex_entropy(16)
+
+    def get_i18n_message_catalog(self):
+        catalog = {}
+        for field in self.BIFF_FIELDS:
+            catalog[field['name'] + '_i18n'] = field['i18n']
+        return catalog
 
     def add(self, opt_value):
         generated_key = self.new_biff_key
@@ -184,8 +192,7 @@ class TicketCustomFileBiffConfig(object):
         if not ticket_ids:
             return
 
-        from api import _
-        comment = _('Updated File Biff field value by Trac administrator')
+        comment = _('Updated File Biff field value by Trac administrator.')
         date = datetime.now(utc)
         for tkt_id in chain.from_iterable(ticket_ids):
             try:

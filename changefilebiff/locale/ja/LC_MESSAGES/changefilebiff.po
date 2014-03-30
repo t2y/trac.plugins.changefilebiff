@@ -1,0 +1,118 @@
+# Japanese translations for TracChangeFileBiffPlugin.
+# Copyright (C) 2014 ORGANIZATION
+# This file is distributed under the same license as the
+# TracChangeFileBiffPlugin project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
+"Report-Msgid-Bugs-To: http://trac-hacks.org/wiki/TracChangeFileBiffPlugin"
+"\n"
+"POT-Creation-Date: 2014-03-31 07:55+0900\n"
+"PO-Revision-Date: 2014-03-29 20:15+0900\n"
+"Last-Translator: Tetsuya Morimoto\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 0.9.6\n"
+
+#: changefilebiff/admin.py:24
+msgid "Ticket System"
+msgstr "チケットシステム"
+
+#: changefilebiff/admin.py:24
+#: changefilebiff/templates/changefilebiff_admin.html:10
+msgid "File Biff"
+msgstr "ファイル更新通知"
+
+#: changefilebiff/admin.py:63
+msgid "No Biff configuration selected."
+msgstr "Biff 設定が選択されていません"
+
+#: changefilebiff/admin.py:76
+msgid "Label and Filename is required."
+msgstr "ラベルとファイル名の設定が必要です"
+
+#: changefilebiff/admin.py:80
+msgid "Whitespace is not allowed for the label."
+msgstr "空白文字類はラベルに設定できません"
+
+#: changefilebiff/admin.py:88
+#, python-format
+msgid "The user '%(user)s' is not existed."
+msgstr "ユーザー '%(user)s' はいません"
+
+#: changefilebiff/admin.py:95
+msgid "The label is already used."
+msgstr "そのラベルは既に設定済みです"
+
+#: changefilebiff/admin.py:111
+#, python-format
+msgid "The value '%(fvalue)s' is already configured."
+msgstr "設定値 '%(fvalue)s' は既に設定済みです"
+
+#: changefilebiff/admin.py:122
+msgid "The selected Biff settings have been removed."
+msgstr "選択した Biff 設定は削除されました"
+
+#: changefilebiff/model.py:20
+#: changefilebiff/templates/changefilebiff_admin.html:67
+msgid "Label"
+msgstr "ラベル"
+
+#: changefilebiff/model.py:21
+#: changefilebiff/templates/changefilebiff_admin.html:68
+msgid "Cc"
+msgstr "関係者"
+
+#: changefilebiff/model.py:22
+#: changefilebiff/templates/changefilebiff_admin.html:69
+msgid "Filename"
+msgstr "ファイル名"
+
+#: changefilebiff/model.py:195
+msgid "Updated File Biff field value by Trac administrator."
+msgstr "Trac 管理者がファイル更新通知設定の値を更新しました"
+
+#: changefilebiff/templates/changefilebiff_admin.html:13
+msgid "Manage File Biff"
+msgstr "ファイル更新通知の管理"
+
+#: changefilebiff/templates/changefilebiff_admin.html:33
+msgid "Modify File Biff:"
+msgstr "ファイル更新通知の変更:"
+
+#: changefilebiff/templates/changefilebiff_admin.html:40
+msgid "Save"
+msgstr "保存"
+
+#: changefilebiff/templates/changefilebiff_admin.html:41
+msgid "Cancel"
+msgstr "取り消し"
+
+#: changefilebiff/templates/changefilebiff_admin.html:49
+msgid "Add File Biff Settings:"
+msgstr "ファイル更新通知の追加:"
+
+#: changefilebiff/templates/changefilebiff_admin.html:56
+msgid "Add"
+msgstr "追加"
+
+#: changefilebiff/templates/changefilebiff_admin.html:82
+msgid "Apply changes"
+msgstr "変更を適用"
+
+#: changefilebiff/templates/changefilebiff_admin.html:83
+msgid "Remove selected items"
+msgstr "選択した項目を削除"
+
+#: changefilebiff/templates/changefilebiff_admin.html:86
+msgid ""
+"You can add some users for Cc and some filenames, at leaset these fields "
+"are required.\n"
+"              Then, the glob pattern for filename is allowed."
+msgstr "関係者やファイル名は複数設定できます。またファイル名は glob パターンが使えます"
+

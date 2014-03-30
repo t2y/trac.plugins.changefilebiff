@@ -4,10 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:py="http://genshi.edgewall.org/"
       xmlns:xi="http://www.w3.org/2001/XInclude"
-      xmlns:i18n="http://genshi.edgewall.org/i18n">
+      xmlns:i18n="http://genshi.edgewall.org/i18n" i18n:domain="changefilebiff">
   <xi:include href="admin.html" />
   <head>
-    <title>ChangefileBiff</title>
+    <title>File Biff</title>
   </head>
   <body>
     <h2>Manage File Biff <span py:if="view == 'list'" class="trac-count">(${len(biff_values)})</span></h2>
@@ -32,9 +32,9 @@
         <fieldset>
           <legend>Modify File Biff:</legend>
 
-          ${detail_text_field(_('Label'), 'label', biff.label)}
-          ${detail_text_field(_('Cc'), 'cc', biff.cc)}
-          ${detail_text_field(_('Filename'), 'filename', biff.filename)}
+          ${detail_text_field(biff.label_i18n, 'label', biff.label)}
+          ${detail_text_field(biff.cc_i18n, 'cc', biff.cc)}
+          ${detail_text_field(biff.filename_i18n, 'filename', biff.filename)}
 
           <div class="buttons">
             <input type="submit" name="save" class="trac-disable-on-submit" value="${_('Save')}"/>
@@ -48,9 +48,9 @@
           <fieldset>
             <legend>Add File Biff Settings:</legend>
 
-            ${input_text_field(_('Label'), 'label')}
-            ${input_text_field(_('Cc'), 'cc')}
-            ${input_text_field(_('Filename'), 'filename')}
+            ${input_text_field(biff.label_i18n, 'label')}
+            ${input_text_field(biff.cc_i18n, 'cc')}
+            ${input_text_field(biff.filename_i18n, 'filename')}
 
             <div class="buttons">
               <input type="submit" name="add" class="trac-disable-on-submit" value="${_('Add')}"/>
@@ -64,9 +64,9 @@
               <thead>
                 <tr>
                   <th class="sel">&nbsp;</th>
-                  <th>${_('Label')}</th>
-                  <th>${_('Cc')}</th>
-                  <th>${_('Filename')}</th>
+                  <th>Label</th>
+                  <th>Cc</th>
+                  <th>Filename</th>
                 </tr>
               </thead>
               <tbody>
@@ -84,14 +84,10 @@
                      value="${_('Remove selected items')}"/>
             </div>
             <p class="help">
-              You can remove some items by selecting the checkbox.
+              You can add some users for Cc and some filenames, at leaset these fields are required.
+              Then, the glob pattern for filename is allowed.
             </p>
           </form>
-
-          <p py:otherwise="" class="help">
-            You can add some users for Cc and some filenames, at leaset these fields are required.
-            Then, the regular expression for filename is allowed.
-          </p>
         </py:choose>
       </py:otherwise>
     </py:choose>
