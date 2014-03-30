@@ -1,0 +1,99 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:i18n="http://genshi.edgewall.org/i18n">
+  <xi:include href="admin.html" />
+  <head>
+    <title>ChangefileBiff</title>
+  </head>
+  <body>
+    <h2>Manage File Biff <span py:if="view == 'list'" class="trac-count">(${len(biff_values)})</span></h2>
+
+    <py:def function="detail_text_field(disp_name, name, value)">
+      <div class="field">
+        <label>$disp_name:
+          <input type="text" name="$name" class="trac-autofocus" value="$value" />
+        </label>
+      </div>
+    </py:def>
+
+    <py:def function="input_text_field(disp_name, name)">
+      <div class="field">
+        <label>$disp_name: <input type="text" name="$name"/></label>
+      </div>
+    </py:def>
+
+
+    <py:choose test="view">
+      <form py:when="'detail'" class="mod" id="modbiff" method="post" action="">
+        <fieldset>
+          <legend>Modify File Biff:</legend>
+
+          ${detail_text_field(_('Label'), 'label', biff.label)}
+          ${detail_text_field(_('Cc'), 'cc', biff.cc)}
+          ${detail_text_field(_('Filename'), 'filename', biff.filename)}
+
+          <div class="buttons">
+            <input type="submit" name="save" class="trac-disable-on-submit" value="${_('Save')}"/>
+            <input type="submit" name="cancel" value="${_('Cancel')}" />
+          </div>
+        </fieldset>
+      </form>
+
+      <py:otherwise>
+        <form class="addnew" id="addfilebiff" method="post" action="">
+          <fieldset>
+            <legend>Add File Biff Settings:</legend>
+
+            ${input_text_field(_('Label'), 'label')}
+            ${input_text_field(_('Cc'), 'cc')}
+            ${input_text_field(_('Filename'), 'filename')}
+
+            <div class="buttons">
+              <input type="submit" name="add" class="trac-disable-on-submit" value="${_('Add')}"/>
+            </div>
+          </fieldset>
+        </form>
+
+        <py:choose>
+          <form py:when="biff_values" id="filebiff_table" method="post" action="">
+            <table class="listing" id="bifflist">
+              <thead>
+                <tr>
+                  <th class="sel">&nbsp;</th>
+                  <th>${_('Label')}</th>
+                  <th>${_('Cc')}</th>
+                  <th>${_('Filename')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr py:for="biff in biff_values">
+                  <td class="sel"><input type="checkbox" name="sel" value="$biff.key" /></td>
+                  <td class="name"><a href="${panel_href(biff.key)}">$biff.label</a></td>
+                  <td class="cc">$biff.cc</td>
+                  <td class="filename">$biff.filename</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="buttons">
+              <input type="submit" name="apply" value="${_('Apply changes')}" />
+              <input type="submit" name="remove" class="trac-disable-on-submit"
+                     value="${_('Remove selected items')}"/>
+            </div>
+            <p class="help">
+              You can remove some items by selecting the checkbox.
+            </p>
+          </form>
+
+          <p py:otherwise="" class="help">
+            You can add some users for Cc and some filenames, at leaset these fields are required.
+            Then, the regular expression for filename is allowed.
+          </p>
+        </py:choose>
+      </py:otherwise>
+    </py:choose>
+  </body>
+</html>
