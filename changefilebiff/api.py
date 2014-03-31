@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import fnmatch
 from datetime import datetime
+from os.path import basename
 
 from trac.core import Component, implements
 from trac.env import IEnvironmentSetupParticipant
@@ -63,7 +64,7 @@ class ChangefileBiffRepositoryChangeListener(Component):
             for chg in changeset.get_changes():
                 for filename in biff_filenames:
                     # chg is (path, kind, change, base_path, base_rev)
-                    if fnmatch.fnmatch(chg[0], filename):
+                    if fnmatch.fnmatch(basename(chg[0]), filename):
                         biff_labels.add(biff['label'])
                         biff_cc.add(biff['cc'])
         return biff_labels, biff_cc
