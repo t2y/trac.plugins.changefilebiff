@@ -242,9 +242,8 @@ class TicketCustomFileBiffConfig(object):
             except Exception as e:
                 self.env.log.error(
                     'Failed to update ticket file biff field value: '
-                    'tkt id: %s, authname: %s, old_value: %s, new_value: %s '
-                    'exception: %s', tkt_id, authname, old_value, new_value,
-                    exception_to_unicode(e))
+                    'tkt id: %s, authname: %s, exception: %s',
+                    tkt_id, authname, exception_to_unicode(e))
 
 
 class FileBiffTicketCustomField(object):

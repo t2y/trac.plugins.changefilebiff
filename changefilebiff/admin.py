@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 from pkg_resources import resource_filename
 from string import whitespace
 
@@ -12,6 +13,8 @@ from api import _
 from model import ChangefileBiffConfig
 
 __all__ = ['ChangefileBiffAdminPage']
+
+WHITESPACE_PATTERN = re.compile(u'|'.join(whitespace), re.U)
 
 
 class ChangefileBiffAdminPage(Component):
@@ -85,7 +88,7 @@ class ChangefileBiffAdminPage(Component):
             add_warning(req, _('Name and Filename is required.'))
             return False
 
-        if whitespace in name:
+        if re.search(WHITESPACE_PATTERN, name):
             add_warning(req, _('Whitespace is not allowed for the name.'))
             return False
 
