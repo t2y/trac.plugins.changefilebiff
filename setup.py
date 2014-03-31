@@ -51,7 +51,7 @@ except ImportError:
 setup(
     name='TracChangeFileBiffPlugin',
     version=VERSION,
-    description='Provides a feature like Biff for file',
+    description='Provides a feature like Biff for file in repository',
     long_description=LONG_DESCRIPTION,
     classifiers=CLASSIFIERS,
     keywords=['trac', 'plugin', 'ticket', 'changeset', 'biff'],
