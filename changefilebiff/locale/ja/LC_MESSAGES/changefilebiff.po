@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-hacks.org/wiki/TracChangeFileBiffPlugin"
 "\n"
-"POT-Creation-Date: 2014-03-31 09:49+0900\n"
+"POT-Creation-Date: 2014-03-31 10:24+0900\n"
 "PO-Revision-Date: 2014-03-29 20:15+0900\n"
 "Last-Translator: Tetsuya Morimoto\n"
 "Language-Team: ja <LL@li.org>\n"
@@ -58,24 +58,28 @@ msgstr "設定値 '%(fvalue)s' は既に設定済みです"
 msgid "The selected Biff settings have been removed."
 msgstr "選択した Biff 設定は削除されました"
 
-#: changefilebiff/model.py:20
+#: changefilebiff/model.py:21
 #: changefilebiff/templates/changefilebiff_admin.html:67
 msgid "Label"
 msgstr "ラベル"
 
-#: changefilebiff/model.py:21
+#: changefilebiff/model.py:22
 #: changefilebiff/templates/changefilebiff_admin.html:68
 msgid "Cc"
 msgstr "関係者"
 
-#: changefilebiff/model.py:22
+#: changefilebiff/model.py:23
 #: changefilebiff/templates/changefilebiff_admin.html:69
 msgid "Filename"
 msgstr "ファイル名"
 
-#: changefilebiff/model.py:195
+#: changefilebiff/model.py:186
 msgid "Updated File Biff field value by Trac administrator."
 msgstr "Trac 管理者がファイル更新通知設定の値を更新しました"
+
+#: changefilebiff/model.py:208
+msgid "Removed File Biff field value by Trac administrator."
+msgstr "Trac 管理者がファイル更新通知設定の値を削除しました"
 
 #: changefilebiff/templates/changefilebiff_admin.html:13
 msgid "Manage File Biff"

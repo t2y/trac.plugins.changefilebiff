@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-"
 "hacks.org/wiki/TracChangeFileBiffPlugin\n"
-"POT-Creation-Date: 2014-03-31 09:49+0900\n"
+"POT-Creation-Date: 2014-03-31 10:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,23 +58,27 @@ msgstr ""
 msgid "The selected Biff settings have been removed."
 msgstr ""
 
-#: changefilebiff/model.py:20
+#: changefilebiff/model.py:21
 #: changefilebiff/templates/changefilebiff_admin.html:67
 msgid "Label"
 msgstr ""
 
-#: changefilebiff/model.py:21
+#: changefilebiff/model.py:22
 #: changefilebiff/templates/changefilebiff_admin.html:68
 msgid "Cc"
 msgstr ""
 
-#: changefilebiff/model.py:22
+#: changefilebiff/model.py:23
 #: changefilebiff/templates/changefilebiff_admin.html:69
 msgid "Filename"
 msgstr ""
 
-#: changefilebiff/model.py:195
+#: changefilebiff/model.py:186
 msgid "Updated File Biff field value by Trac administrator."
+msgstr ""
+
+#: changefilebiff/model.py:208
+msgid "Removed File Biff field value by Trac administrator."
 msgstr ""
 
 #: changefilebiff/templates/changefilebiff_admin.html:13

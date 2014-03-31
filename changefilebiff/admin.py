@@ -56,7 +56,7 @@ class ChangefileBiffAdminPage(Component):
                     if not isinstance(select_keys, list):
                         select_keys = [select_keys]
 
-                    biff_config.remove(select_keys)
+                    biff_config.remove(req.authname, select_keys)
                     self._add_notice_removed(req)
                     req.redirect(req.href.admin(cat, page))
                 else:

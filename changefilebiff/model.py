@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from itertools import chain
+from operator import methodcaller
 
 from trac.ticket import Ticket
 from trac.util import hex_entropy
@@ -76,14 +77,14 @@ class ChangefileBiffConfig(object):
                                                        old_value, new_value)
         self.config.save()
 
-    def remove(self, keys):
+    def remove(self, authname, keys):
         old_values = []
         for key in keys:
             option = self.BIFF_OPTION % (key, 'label')
             old_values.append(self.config.get(self.SECTION, option, ''))
             self.remove_option(key)
 
-        self.ticket_custom_config.remove_options_value(old_values)
+        self.ticket_custom_config.remove_options_value(authname, old_values)
         self.config.save()
 
     def set_option(self, opt_value, key, is_new=False):
@@ -178,38 +179,15 @@ class TicketCustomFileBiffConfig(object):
             self.update_ticket_field(authname, old_value, new_value)
 
     def update_ticket_field(self, authname, old_value, new_value):
-        ticket_ids = []
-        sql = self.GET_TICKET_ID_FROM_TICKET_CUSTOM
-        params = (self.CUSTOM_FIELDS['name'], '%%%s%%' % old_value)
-        try:
-            with self.env.db_query as db:
-                ticket_ids = [id_ for id_ in db(sql, params)]
-        except Exception as e:
-            self.env.log.error('Failed to get ticket ids: '
-                               'sql: %s, params: %s, exception: %s',
-                               sql, params, exception_to_unicode(e))
-
+        ticket_ids = self._get_ticket_ids(old_value)
         if not ticket_ids:
             return
 
         comment = _('Updated File Biff field value by Trac administrator.')
-        date = datetime.now(utc)
-        for tkt_id in chain.from_iterable(ticket_ids):
-            try:
-                with self.env.db_transaction:
-                    ticket = Ticket(self.env, tkt_id)
-                    fb_field = FileBiffTicketCustomField(ticket)
-                    fb_field.update(old_value, new_value)
-                    if fb_field.is_updated:
-                        ticket.save_changes(authname, comment, date)
-            except Exception as e:
-                self.env.log.error(
-                    'Failed to update ticket file biff field value: '
-                    'tkt id: %s, authname: %s, old_value: %s, new_value: %s '
-                    'exception: %s', tkt_id, authname, old_value, new_value,
-                    exception_to_unicode(e))
+        fb_methodcaller = methodcaller('update', old_value, new_value)
+        self._update_field(authname, comment, ticket_ids, fb_methodcaller)
 
-    def remove_options_value(self, remove_values):
+    def remove_options_value(self, authname, remove_values):
         values = self.get_options_value()
         has_remove_value = False
         for value in remove_values:
@@ -219,6 +197,17 @@ class TicketCustomFileBiffConfig(object):
 
         if has_remove_value:
             self.set_fb_options(values)
+            self.remove_ticket_field(authname, remove_values)
+
+    def remove_ticket_field(self, authname, remove_values):
+        for value in remove_values:
+            ticket_ids = self._get_ticket_ids(value)
+            if not ticket_ids:
+                continue
+
+            comment = _('Removed File Biff field value by Trac administrator.')
+            fb_methodcaller = methodcaller('remove', value)
+            self._update_field(authname, comment, ticket_ids, fb_methodcaller)
 
     def set_fb_options(self, values):
         updated_values = u' '.join(sorted(list(values)))
@@ -226,6 +215,36 @@ class TicketCustomFileBiffConfig(object):
 
     def save(self):
         self.config.save()
+
+    def _get_ticket_ids(self, value):
+        ticket_ids = []
+        sql = self.GET_TICKET_ID_FROM_TICKET_CUSTOM
+        params = (self.CUSTOM_FIELDS['name'], '%%%s%%' % value)
+        try:
+            with self.env.db_query as db:
+                ticket_ids = [id_ for id_ in db(sql, params)]
+        except Exception as e:
+            self.env.log.error('Failed to get ticket ids: '
+                               'sql: %s, params: %s, exception: %s',
+                               sql, params, exception_to_unicode(e))
+        return ticket_ids
+
+    def _update_field(self, authname, comment, ticket_ids, fb_methodcaller):
+        date = datetime.now(utc)
+        for tkt_id in chain.from_iterable(ticket_ids):
+            try:
+                with self.env.db_transaction:
+                    ticket = Ticket(self.env, tkt_id)
+                    fb_field = FileBiffTicketCustomField(ticket)
+                    fb_methodcaller(fb_field)
+                    if fb_field.is_updated:
+                        ticket.save_changes(authname, comment, date)
+            except Exception as e:
+                self.env.log.error(
+                    'Failed to update ticket file biff field value: '
+                    'tkt id: %s, authname: %s, old_value: %s, new_value: %s '
+                    'exception: %s', tkt_id, authname, old_value, new_value,
+                    exception_to_unicode(e))
 
 
 class FileBiffTicketCustomField(object):
