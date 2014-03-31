@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-"
 "hacks.org/wiki/TracChangeFileBiffPlugin\n"
-"POT-Creation-Date: 2014-03-31 07:55+0900\n"
+"POT-Creation-Date: 2014-03-31 09:49+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,29 +32,29 @@ msgstr ""
 msgid "No Biff configuration selected."
 msgstr ""
 
-#: changefilebiff/admin.py:76
+#: changefilebiff/admin.py:85
 msgid "Label and Filename is required."
 msgstr ""
 
-#: changefilebiff/admin.py:80
+#: changefilebiff/admin.py:89
 msgid "Whitespace is not allowed for the label."
 msgstr ""
 
-#: changefilebiff/admin.py:88
+#: changefilebiff/admin.py:97
 #, python-format
 msgid "The user '%(user)s' is not existed."
 msgstr ""
 
-#: changefilebiff/admin.py:95
+#: changefilebiff/admin.py:103
 msgid "The label is already used."
 msgstr ""
 
-#: changefilebiff/admin.py:111
+#: changefilebiff/admin.py:119
 #, python-format
 msgid "The value '%(fvalue)s' is already configured."
 msgstr ""
 
-#: changefilebiff/admin.py:122
+#: changefilebiff/admin.py:130
 msgid "The selected Biff settings have been removed."
 msgstr ""
 
@@ -111,8 +111,7 @@ msgstr ""
 
 #: changefilebiff/templates/changefilebiff_admin.html:86
 msgid ""
-"You can add some users for Cc and some filenames, at leaset these "
-"fields are required.\n"
+"You can add some users for Cc and some filenames separated by comma.\n"
 "              Then, the glob pattern for filename is allowed."
 msgstr ""
 
