@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-"
 "hacks.org/wiki/TracChangeFileBiffPlugin\n"
-"POT-Creation-Date: 2014-03-31 10:51+0900\n"
+"POT-Creation-Date: 2014-03-31 12:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,6 +71,10 @@ msgstr ""
 #: changefilebiff/model.py:23
 #: changefilebiff/templates/changefilebiff_admin.html:69
 msgid "Filename"
+msgstr ""
+
+#: changefilebiff/model.py:132
+msgid "Biff"
 msgstr ""
 
 #: changefilebiff/model.py:186

@@ -129,7 +129,7 @@ class TicketCustomFileBiffConfig(object):
         'properties': [
             ('filebiff.format', 'list'),
             ('filebiff.multiple', 'true'),
-            ('filebiff.label', 'File Biff'),
+            ('filebiff.label', _('Biff')),
             ('filebiff.options', ''),
             ('filebiff.size', '3'),
         ],
