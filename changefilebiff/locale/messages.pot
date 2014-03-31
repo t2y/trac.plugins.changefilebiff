@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-"
 "hacks.org/wiki/TracChangeFileBiffPlugin\n"
-"POT-Creation-Date: 2014-03-31 12:21+0900\n"
+"POT-Creation-Date: 2014-03-31 14:25+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,42 +19,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: changefilebiff/admin.py:24
+#: changefilebiff/admin.py:27
 msgid "Ticket System"
 msgstr ""
 
-#: changefilebiff/admin.py:24
+#: changefilebiff/admin.py:27
 #: changefilebiff/templates/changefilebiff_admin.html:10
 msgid "File Biff"
 msgstr ""
 
-#: changefilebiff/admin.py:63
+#: changefilebiff/admin.py:66
 msgid "No Biff configuration selected."
 msgstr ""
 
-#: changefilebiff/admin.py:85
+#: changefilebiff/admin.py:88
 msgid "Name and Filename is required."
 msgstr ""
 
-#: changefilebiff/admin.py:89
+#: changefilebiff/admin.py:92
 msgid "Whitespace is not allowed for the name."
 msgstr ""
 
-#: changefilebiff/admin.py:97
+#: changefilebiff/admin.py:100
 #, python-format
 msgid "The user '%(user)s' is not existed."
 msgstr ""
 
-#: changefilebiff/admin.py:103
+#: changefilebiff/admin.py:106
 msgid "The name is already used."
 msgstr ""
 
-#: changefilebiff/admin.py:119
+#: changefilebiff/admin.py:122
 #, python-format
 msgid "The value '%(fvalue)s' is already configured."
 msgstr ""
 
-#: changefilebiff/admin.py:130
+#: changefilebiff/admin.py:133
 msgid "The selected Biff settings have been removed."
 msgstr ""
 

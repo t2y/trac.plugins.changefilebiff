@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-hacks.org/wiki/TracChangeFileBiffPlugin"
 "\n"
-"POT-Creation-Date: 2014-03-31 12:21+0900\n"
+"POT-Creation-Date: 2014-03-31 14:25+0900\n"
 "PO-Revision-Date: 2014-03-29 20:15+0900\n"
 "Last-Translator: Tetsuya Morimoto\n"
 "Language-Team: ja <LL@li.org>\n"
@@ -19,42 +19,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 0.9.6\n"
 
-#: changefilebiff/admin.py:24
+#: changefilebiff/admin.py:27
 msgid "Ticket System"
 msgstr "チケットシステム"
 
-#: changefilebiff/admin.py:24
+#: changefilebiff/admin.py:27
 #: changefilebiff/templates/changefilebiff_admin.html:10
 msgid "File Biff"
 msgstr "ファイル更新通知"
 
-#: changefilebiff/admin.py:63
+#: changefilebiff/admin.py:66
 msgid "No Biff configuration selected."
 msgstr "更新通知設定が選択されていません"
 
-#: changefilebiff/admin.py:85
+#: changefilebiff/admin.py:88
 msgid "Name and Filename is required."
 msgstr "名称とファイル名の設定が必要です"
 
-#: changefilebiff/admin.py:89
+#: changefilebiff/admin.py:92
 msgid "Whitespace is not allowed for the name."
 msgstr "空白文字類は名称に設定できません"
 
-#: changefilebiff/admin.py:97
+#: changefilebiff/admin.py:100
 #, python-format
 msgid "The user '%(user)s' is not existed."
 msgstr "ユーザー '%(user)s' はいません"
 
-#: changefilebiff/admin.py:103
+#: changefilebiff/admin.py:106
 msgid "The name is already used."
 msgstr "その名称は既に設定済みです"
 
-#: changefilebiff/admin.py:119
+#: changefilebiff/admin.py:122
 #, python-format
 msgid "The value '%(fvalue)s' is already configured."
 msgstr "設定値 '%(fvalue)s' は既に設定済みです"
 
-#: changefilebiff/admin.py:130
+#: changefilebiff/admin.py:133
 msgid "The selected Biff settings have been removed."
 msgstr "選択した更新通知設定は削除されました"
 
