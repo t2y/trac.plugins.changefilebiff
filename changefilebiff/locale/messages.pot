@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-"
 "hacks.org/wiki/TracChangeFileBiffPlugin\n"
-"POT-Creation-Date: 2014-03-31 10:24+0900\n"
+"POT-Creation-Date: 2014-03-31 10:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,11 +33,11 @@ msgid "No Biff configuration selected."
 msgstr ""
 
 #: changefilebiff/admin.py:85
-msgid "Label and Filename is required."
+msgid "Name and Filename is required."
 msgstr ""
 
 #: changefilebiff/admin.py:89
-msgid "Whitespace is not allowed for the label."
+msgid "Whitespace is not allowed for the name."
 msgstr ""
 
 #: changefilebiff/admin.py:97
@@ -46,7 +46,7 @@ msgid "The user '%(user)s' is not existed."
 msgstr ""
 
 #: changefilebiff/admin.py:103
-msgid "The label is already used."
+msgid "The name is already used."
 msgstr ""
 
 #: changefilebiff/admin.py:119
@@ -60,7 +60,7 @@ msgstr ""
 
 #: changefilebiff/model.py:21
 #: changefilebiff/templates/changefilebiff_admin.html:67
-msgid "Label"
+msgid "Name"
 msgstr ""
 
 #: changefilebiff/model.py:22

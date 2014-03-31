@@ -49,15 +49,15 @@ class ChangefileBiffRepositoryChangeListener(Component):
     implements(IRepositoryChangeListener)
 
     def changeset_added(self, repos, changeset):
-        biff_labels, biff_cc = self._get_biff_labels_and_cc(changeset)
-        if biff_labels:
-            self._update_ticket(changeset, biff_labels, biff_cc)
+        biff_names, biff_cc = self._get_biff_names_and_cc(changeset)
+        if biff_names:
+            self._update_ticket(changeset, biff_names, biff_cc)
 
     def changeset_modified(self, repos, changeset, old_changeset):
         pass
 
-    def _get_biff_labels_and_cc(self, changeset):
-        biff_labels, biff_cc = set(), set()
+    def _get_biff_names_and_cc(self, changeset):
+        biff_names, biff_cc = set(), set()
         biff_config = ChangefileBiffConfig(self.env, self.config)
         for biff in biff_config.biff.values():
             biff_filenames = [_f.strip() for _f in biff['filename'].split(',')]
@@ -65,11 +65,11 @@ class ChangefileBiffRepositoryChangeListener(Component):
                 for filename in biff_filenames:
                     # chg is (path, kind, change, base_path, base_rev)
                     if fnmatch.fnmatch(basename(chg[0]), filename):
-                        biff_labels.add(biff['label'])
+                        biff_names.add(biff['name'])
                         biff_cc.add(biff['cc'])
-        return biff_labels, biff_cc
+        return biff_names, biff_cc
 
-    def _update_ticket(self, changeset, biff_labels, biff_cc):
+    def _update_ticket(self, changeset, biff_names, biff_cc):
         ticket_updator = self.env.compmgr.components.get(CommitTicketUpdater)
         if not ticket_updator:
             self.env.log.error('CommitTicketUpdater is not available, '
@@ -92,7 +92,7 @@ class ChangefileBiffRepositoryChangeListener(Component):
                         cc_list = ', ' + ', '.join(biff_cc)
                         ticket['cc'] += cc_list
                         fb_field = FileBiffTicketCustomField(ticket)
-                        fb_field.add(biff_labels)
+                        fb_field.add(biff_names)
                         if fb_field.is_updated:
                             ticket.save_changes(changeset.author, '', date)
             except Exception as e:

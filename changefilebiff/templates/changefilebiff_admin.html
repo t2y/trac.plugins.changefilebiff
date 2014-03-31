@@ -32,7 +32,7 @@
         <fieldset>
           <legend>Modify File Biff:</legend>
 
-          ${detail_text_field(biff.label_i18n, 'label', biff.label)}
+          ${detail_text_field(biff.name_i18n, 'name', biff.name)}
           ${detail_text_field(biff.cc_i18n, 'cc', biff.cc)}
           ${detail_text_field(biff.filename_i18n, 'filename', biff.filename)}
 
@@ -48,7 +48,7 @@
           <fieldset>
             <legend>Add File Biff Settings:</legend>
 
-            ${input_text_field(biff.label_i18n, 'label')}
+            ${input_text_field(biff.name_i18n, 'name')}
             ${input_text_field(biff.cc_i18n, 'cc')}
             ${input_text_field(biff.filename_i18n, 'filename')}
 
@@ -64,7 +64,7 @@
               <thead>
                 <tr>
                   <th class="sel">&nbsp;</th>
-                  <th>Label</th>
+                  <th>Name</th>
                   <th>Cc</th>
                   <th>Filename</th>
                 </tr>
@@ -72,7 +72,7 @@
               <tbody>
                 <tr py:for="biff in biff_values">
                   <td class="sel"><input type="checkbox" name="sel" value="$biff.key" /></td>
-                  <td class="name"><a href="${panel_href(biff.key)}">$biff.label</a></td>
+                  <td class="name"><a href="${panel_href(biff.key)}">$biff.name</a></td>
                   <td class="cc">$biff.cc</td>
                   <td class="filename">$biff.filename</td>
                 </tr>

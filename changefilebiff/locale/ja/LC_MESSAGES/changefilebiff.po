@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: TracChangeFileBiffPlugin 0.3.0\n"
 "Report-Msgid-Bugs-To: http://trac-hacks.org/wiki/TracChangeFileBiffPlugin"
 "\n"
-"POT-Creation-Date: 2014-03-31 10:24+0900\n"
+"POT-Creation-Date: 2014-03-31 10:51+0900\n"
 "PO-Revision-Date: 2014-03-29 20:15+0900\n"
 "Last-Translator: Tetsuya Morimoto\n"
 "Language-Team: ja <LL@li.org>\n"
@@ -33,12 +33,12 @@ msgid "No Biff configuration selected."
 msgstr "Biff 設定が選択されていません"
 
 #: changefilebiff/admin.py:85
-msgid "Label and Filename is required."
-msgstr "ラベルとファイル名の設定が必要です"
+msgid "Name and Filename is required."
+msgstr "名称とファイル名の設定が必要です"
 
 #: changefilebiff/admin.py:89
-msgid "Whitespace is not allowed for the label."
-msgstr "空白文字類はラベルに設定できません"
+msgid "Whitespace is not allowed for the name."
+msgstr "空白文字類は名称に設定できません"
 
 #: changefilebiff/admin.py:97
 #, python-format
@@ -46,8 +46,8 @@ msgid "The user '%(user)s' is not existed."
 msgstr "ユーザー '%(user)s' はいません"
 
 #: changefilebiff/admin.py:103
-msgid "The label is already used."
-msgstr "そのラベルは既に設定済みです"
+msgid "The name is already used."
+msgstr "その名称は既に設定済みです"
 
 #: changefilebiff/admin.py:119
 #, python-format
@@ -60,8 +60,8 @@ msgstr "選択した Biff 設定は削除されました"
 
 #: changefilebiff/model.py:21
 #: changefilebiff/templates/changefilebiff_admin.html:67
-msgid "Label"
-msgstr "ラベル"
+msgid "Name"
+msgstr "名称"
 
 #: changefilebiff/model.py:22
 #: changefilebiff/templates/changefilebiff_admin.html:68
@@ -118,4 +118,3 @@ msgid ""
 "You can add some users for Cc and some filenames separated by comma.\n"
 "              Then, the glob pattern for filename is allowed."
 msgstr "関係者やファイル名はカンマで区切ることで複数設定できます。またファイル名には glob パターンが使えます"
-

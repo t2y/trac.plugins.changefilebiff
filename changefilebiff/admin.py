@@ -77,16 +77,16 @@ class ChangefileBiffAdminPage(Component):
         return self._validate_common(req, biff_values)
 
     def _validate_common(self, req, biff_values):
-        label = req.args.get('label')
+        name = req.args.get('name')
         cc = req.args.get('cc')
         filename = req.args.get('filename')
 
-        if not (label and filename):
-            add_warning(req, _('Label and Filename is required.'))
+        if not (name and filename):
+            add_warning(req, _('Name and Filename is required.'))
             return False
 
-        if whitespace in label:
-            add_warning(req, _('Whitespace is not allowed for the label.'))
+        if whitespace in name:
+            add_warning(req, _('Whitespace is not allowed for the name.'))
             return False
 
         if cc:
@@ -98,9 +98,9 @@ class ChangefileBiffAdminPage(Component):
                     add_warning(req, _msg)
                     return False
 
-        biff_labels = map(lambda x: x['label'], biff_values)
-        if label in biff_labels:
-            add_warning(req, _('The label is already used.'))
+        biff_names = map(lambda x: x['name'], biff_values)
+        if name in biff_names:
+            add_warning(req, _('The name is already used.'))
             return False
 
         multiple_fields = ['filename']

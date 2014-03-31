@@ -18,9 +18,9 @@ class ChangefileBiffConfig(object):
     BIFF_KEYS = 'biff_keys'
     BIFF_OPTION = 'biff.%s.%s'  # biff.$key.$field_name
     BIFF_FIELDS = [
-        {'name': 'label', 'multiple': False, 'i18n': _('Label')},
-        {'name': 'cc', 'multiple': True, 'i18n': _('Cc')},
-        {'name': 'filename', 'multiple': True, 'i18n': _('Filename')},
+        {'id': 'name', 'multiple': False, 'i18n': _('Name')},
+        {'id': 'cc', 'multiple': True, 'i18n': _('Cc')},
+        {'id': 'filename', 'multiple': True, 'i18n': _('Filename')},
     ]
 
     def __init__(self, env, config):
@@ -44,10 +44,10 @@ class ChangefileBiffConfig(object):
         for key in self.keys:
             biff[key] = {'key': key}
             for field in self.BIFF_FIELDS:
-                name = field['name']
-                option = self.BIFF_OPTION % (key, name)
-                biff[key][name] = get_value(option, field['multiple'])
-                biff[key][name + '_i18n'] = field['i18n']
+                id_ = field['id']
+                option = self.BIFF_OPTION % (key, id_)
+                biff[key][id_] = get_value(option, field['multiple'])
+                biff[key][id_ + '_i18n'] = field['i18n']
         return biff
 
     @property
@@ -57,22 +57,22 @@ class ChangefileBiffConfig(object):
     def get_i18n_message_catalog(self):
         catalog = {}
         for field in self.BIFF_FIELDS:
-            catalog[field['name'] + '_i18n'] = field['i18n']
+            catalog[field['id'] + '_i18n'] = field['i18n']
         return catalog
 
     def add(self, opt_value):
         generated_key = self.new_biff_key
         self.set_option(opt_value, generated_key, is_new=True)
-        self.ticket_custom_config.add_options_value(opt_value.get('label'))
+        self.ticket_custom_config.add_options_value(opt_value.get('name'))
         self.config.save()
         return generated_key
 
     def update(self, authname, opt_value, key):
-        option = self.BIFF_OPTION % (key, 'label')
+        option = self.BIFF_OPTION % (key, 'name')
         old_value = self.config.get(self.SECTION, option, '')
         self.set_option(opt_value, key)
 
-        new_value = opt_value.get('label')
+        new_value = opt_value.get('name')
         self.ticket_custom_config.update_options_value(authname,
                                                        old_value, new_value)
         self.config.save()
@@ -80,7 +80,7 @@ class ChangefileBiffConfig(object):
     def remove(self, authname, keys):
         old_values = []
         for key in keys:
-            option = self.BIFF_OPTION % (key, 'label')
+            option = self.BIFF_OPTION % (key, 'name')
             old_values.append(self.config.get(self.SECTION, option, ''))
             self.remove_option(key)
 
@@ -93,11 +93,11 @@ class ChangefileBiffConfig(object):
             self._set_option_biff_keys()
 
         for field in self.BIFF_FIELDS:
-            name = field['name']
-            value = opt_value.get(name, u'')
+            id_ = field['id']
+            value = opt_value.get(id_, u'')
             if field['multiple'] and isinstance(value, (list, tuple)):
                 value = u', '.join(value)
-            option = self.BIFF_OPTION % (key, name)
+            option = self.BIFF_OPTION % (key, id_)
             self.config.set(self.SECTION, option, value)
 
     def save(self):
@@ -112,8 +112,8 @@ class ChangefileBiffConfig(object):
             self._set_option_biff_keys()
 
         for field in self.BIFF_FIELDS:
-            name = field['name']
-            self.config.remove(self.SECTION, self.BIFF_OPTION % (key, name))
+            id_ = field['id']
+            self.config.remove(self.SECTION, self.BIFF_OPTION % (key, id_))
 
     def _set_option_biff_keys(self):
         self.config.set(self.SECTION, self.BIFF_KEYS, u', '.join(self.keys))
@@ -124,7 +124,7 @@ class TicketCustomFileBiffConfig(object):
 
     SECTION = 'ticket-custom'
     CUSTOM_FIELDS = {
-        'name': 'filebiff',
+        'id': 'filebiff',
         'type': 'text',
         'properties': [
             ('filebiff.format', 'list'),
@@ -148,17 +148,17 @@ class TicketCustomFileBiffConfig(object):
         return self.CUSTOM_FIELDS['properties'][3][0]
 
     def has_custom_field(self):
-        return self.CUSTOM_FIELDS['name'] in self.config['ticket-custom']
+        return self.CUSTOM_FIELDS['id'] in self.config['ticket-custom']
 
     def add_custom_field(self):
         ticket_custom = self.config['ticket-custom']
         field = self.CUSTOM_FIELDS
-        ticket_custom.set(field['name'], field['type'])
+        ticket_custom.set(field['id'], field['type'])
         for key, value in field['properties']:
             ticket_custom.set(key, value)
         self.config.save()
         _msg = '%s [%s] settings into [ticket-custom] is added in trac.ini'
-        self.env.log.info(_msg % (field['name'], field['type']))
+        self.env.log.info(_msg % (field['id'], field['type']))
 
     def get_options_value(self):
         current_values = self.config.get(self.SECTION, self.fb_options, '')
@@ -219,7 +219,7 @@ class TicketCustomFileBiffConfig(object):
     def _get_ticket_ids(self, value):
         ticket_ids = []
         sql = self.GET_TICKET_ID_FROM_TICKET_CUSTOM
-        params = (self.CUSTOM_FIELDS['name'], '%%%s%%' % value)
+        params = (self.CUSTOM_FIELDS['id'], '%%%s%%' % value)
         try:
             with self.env.db_query as db:
                 ticket_ids = [id_ for id_ in db(sql, params)]
@@ -250,7 +250,7 @@ class TicketCustomFileBiffConfig(object):
 class FileBiffTicketCustomField(object):
     """File Biff field model to handle the ticket custom field."""
 
-    field_name = TicketCustomFileBiffConfig.CUSTOM_FIELDS['name']
+    field_name = TicketCustomFileBiffConfig.CUSTOM_FIELDS['id']
 
     def __init__(self, ticket):
         self.ticket = ticket
