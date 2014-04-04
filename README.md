@@ -17,9 +17,9 @@ Features
 Configuration
 =============
 
-1. Enable TracChangeFileBiffPlugin in Plugins page.
+* Enable TracChangeFileBiffPlugin in Plugins page.
 
-2. **Access to File Biff admin panel**
+* **Access to File Biff admin panel**
 
   The option of `ticket-custom` section would be added when you access to File Biff admin page like this.
 
@@ -31,7 +31,7 @@ Configuration
     filebiff.options =          ; will be set when you configure File Biff settings
     filebiff.size = 3           ; this option is used by TracMultiSelectBoxPlugin
 
-3. **Configure a File Biff settings**
+* **Configure a File Biff settings**
 
   Specification:
 
