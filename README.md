@@ -11,7 +11,7 @@ the **list** format of text type. ([TracTicketsCustomFields](http://trac.edgewal
 Features
 --------
 
-* Provides a feature like [http://en.wikipedia.org/wiki/Biff Biff] for file in repository
+* Provides a feature like [Biff](http://en.wikipedia.org/wiki/Biff "Biff") for file in repository
 
 
 Configuration
