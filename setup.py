@@ -15,6 +15,7 @@ except (IOError, ImportError):
 
 REQUIRES = [
     'Trac >= 1.0',
+    'pathspec >= 0.3'
 ]
 
 CLASSIFIERS = [

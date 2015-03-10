@@ -3,6 +3,8 @@ import fnmatch
 from datetime import datetime
 from os.path import basename
 
+from pathspec import PathSpec
+
 from trac.core import Component, implements
 from trac.env import IEnvironmentSetupParticipant
 from trac.perm import PermissionCache
@@ -61,12 +63,14 @@ class ChangefileBiffRepositoryChangeListener(Component):
         biff_config = ChangefileBiffConfig(self.env, self.config)
         for biff in biff_config.biff.values():
             biff_filenames = [_f.strip() for _f in biff['filename'].split(',')]
-            for chg in changeset.get_changes():
-                for filename in biff_filenames:
-                    # chg is (path, kind, change, base_path, base_rev)
-                    if fnmatch.fnmatch(basename(chg[0]), filename):
-                        biff_names.add(biff['name'])
-                        biff_cc.add(biff['cc'])
+            biff_pathspec = PathSpec.from_lines('gitignore', biff_filenames)
+
+            # chg is (path, kind, change, base_path, base_rev)
+            match_files = biff_pathspec.match_files([chg[0] for chg in changeset.get_changes()])
+            for filename in match_files:
+                self.env.log.info(filename)
+                biff_names.add(biff['name'])
+                biff_cc.add(biff['cc'])
         return biff_names, biff_cc
 
     def _update_ticket(self, changeset, biff_names, biff_cc):
