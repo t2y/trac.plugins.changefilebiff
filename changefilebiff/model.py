@@ -9,6 +9,7 @@ from trac.util.datefmt import utc
 from trac.util.text import exception_to_unicode
 
 from api import _
+import matcher
 
 
 class ChangefileBiffConfig(object):
@@ -118,6 +119,9 @@ class ChangefileBiffConfig(object):
     def _set_option_biff_keys(self):
         self.config.set(self.SECTION, self.BIFF_KEYS, u', '.join(self.keys))
 
+    def get_filename_matcher(self):
+        mp = self.ticket_custom_config.get_matching_pattern_value()
+        return matcher.get_filename_matcher(self.env, mp)
 
 class TicketCustomFileBiffConfig(object):
     """Configuration model to handle [ticket-custom] section in trac.ini."""
@@ -132,6 +136,7 @@ class TicketCustomFileBiffConfig(object):
             ('filebiff.label', _('Biff')),
             ('filebiff.options', ''),
             ('filebiff.size', '3'),
+            ('filebiff.matching_pattern', matcher.DEFAULT_MATCHING_PATTERN),
         ],
     }
 
@@ -146,6 +151,10 @@ class TicketCustomFileBiffConfig(object):
     @property
     def fb_options(self):
         return self.CUSTOM_FIELDS['properties'][3][0]
+
+    @property
+    def fb_matching_pattern(self):
+        return self.CUSTOM_FIELDS['properties'][5][0]
 
     def has_custom_field(self):
         return self.CUSTOM_FIELDS['id'] in self.config['ticket-custom']
@@ -244,6 +253,9 @@ class TicketCustomFileBiffConfig(object):
                     'Failed to update ticket file biff field value: '
                     'tkt id: %s, authname: %s, exception: %s',
                     tkt_id, authname, exception_to_unicode(e))
+
+    def get_matching_pattern_value(self):
+        return self.config.get(self.SECTION, self.fb_matching_pattern, '')
 
 
 class FileBiffTicketCustomField(object):

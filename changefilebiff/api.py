@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-import fnmatch
 from datetime import datetime
-from os.path import basename
-
-from pathspec import PathSpec
 
 from trac.core import Component, implements
 from trac.env import IEnvironmentSetupParticipant
@@ -61,14 +57,16 @@ class ChangefileBiffRepositoryChangeListener(Component):
     def _get_biff_names_and_cc(self, changeset):
         biff_names, biff_cc = set(), set()
         biff_config = ChangefileBiffConfig(self.env, self.config)
+        biff_matcher = biff_config.get_filename_matcher()
+
         for biff in biff_config.biff.values():
             biff_filenames = [_f.strip() for _f in biff['filename'].split(',')]
-            biff_pathspec = PathSpec.from_lines('gitignore', biff_filenames)
+            match_files = biff_matcher.match_files(
+                biff_filenames,
+                # chg is (path, kind, change, base_path, base_rev)
+                [chg[0] for chg in changeset.get_changes()])
 
-            # chg is (path, kind, change, base_path, base_rev)
-            match_files = biff_pathspec.match_files([chg[0] for chg in changeset.get_changes()])
-            for filename in match_files:
-                self.env.log.info(filename)
+            if any(match_files):
                 biff_names.add(biff['name'])
                 biff_cc.add(biff['cc'])
         return biff_names, biff_cc

@@ -15,8 +15,13 @@ except (IOError, ImportError):
 
 REQUIRES = [
     'Trac >= 1.0',
-    'pathspec >= 0.3'
 ]
+
+EXTRAS_REQUIRE = {
+    'gitignore': [
+        'pathspec >= 0.3',
+    ],
+}
 
 CLASSIFIERS = [
     'Framework :: Trac',
@@ -71,6 +76,7 @@ setup(
     },
     include_package_data=True,
     install_requires=REQUIRES,
+    extras_require=EXTRAS_REQUIRE,
     entry_points={
         'trac.plugins': [
             'changefilebiff.admin = changefilebiff.admin',

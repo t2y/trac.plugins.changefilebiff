@@ -30,6 +30,7 @@ Configuration
     filebiff.multiple = true    ; this option is used by TracMultiSelectBoxPlugin
     filebiff.options =          ; will be set when you configure File Biff settings
     filebiff.size = 3           ; this option is used by TracMultiSelectBoxPlugin
+    filebiff.matching_pattern = fnmatch ; glob matching pattern (fnmatch or gitignore)
 
 * **Configure a File Biff settings**
 
@@ -37,7 +38,11 @@ Configuration
 
     * White-space is not allowed to include into Name
     * Cc and Filename are configured multiple values separated by comma.
-    * The glob pattern for Filename is allowed with gitignore sytle pattern by [pathspec library](https://pypi.python.org/pypi/pathspec/ "pathspec library").
+    * The glob pattern for Filename is allowed with [fnmatch module](https://docs.python.org/2/library/fnmatch.html "fnmatch module").
+    * Glob pattern for Filename is allowed
+    * Glob pattern is configurable in `filebiff.matching_pattern` of `[ticket-custom]`. The possible values are (default: `fnmatch`):
+        * `fnmatch`: standard glob pattern by [fnmatch module](https://docs.python.org/2/library/fnmatch.html "fnmatch module").
+        * `gitignore`: gitignore sytle pattern by [pathspec library](https://pypi.python.org/pypi/pathspec/ "pathspec library").
 
   Added `[changefilebiff]` section after you configured File Biff settings like this.
 
