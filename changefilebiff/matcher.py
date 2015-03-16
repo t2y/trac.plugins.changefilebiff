@@ -2,6 +2,7 @@
 
 import fnmatch
 from os.path import basename
+from abc import ABCMeta, abstractmethod
 
 try:
     from pathspec import PathSpec
@@ -28,7 +29,15 @@ def get_filename_matcher(env, matching_pattern):
 
 
 
-class FnmatchMatcher(object):
+class Matcher(object):
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def match_files(self, filename_patterns, files):
+        pass
+
+
+class FnmatchMatcher(Matcher):
     def match_files(self, filename_patterns, files):
         for fname in files:
             for pattern in filename_patterns:
@@ -36,7 +45,7 @@ class FnmatchMatcher(object):
                     yield fname
 
 
-class GitIgnoreMatcher(object):
+class GitIgnoreMatcher(Matcher):
     def match_files(self, filename_patterns, files):
         spec = PathSpec.from_lines('gitignore', filename_patterns)
         return spec.match_files(files)
