@@ -38,9 +38,8 @@ Configuration
 
     * White-space is not allowed to include into Name
     * Cc and Filename are configured multiple values separated by comma.
-    * The glob pattern for Filename is allowed with [fnmatch module](https://docs.python.org/2/library/fnmatch.html "fnmatch module").
-    * Glob pattern for Filename is allowed
-    * Glob pattern is configurable in `filebiff.matching_pattern` of `[ticket-custom]`. The possible values are (default: `fnmatch`):
+    * The glob pattern for Filename is allowed
+    * The glob pattern is configurable in `filebiff.matching_pattern` of `[ticket-custom]`. The possible values are (default: `fnmatch`):
         * `fnmatch`: standard glob pattern by [fnmatch module](https://docs.python.org/2/library/fnmatch.html "fnmatch module").
         * `gitignore`: gitignore sytle pattern by [pathspec library](https://pypi.python.org/pypi/pathspec/ "pathspec library").
 
