@@ -14,9 +14,6 @@ DEFAULT_MATCHING_PATTERN = 'fnmatch'
 def get_filename_matcher(env, matching_pattern):
     """Get filename matcher for matching_pattern."""
 
-    env.log.info('matching_pattern = %s', matching_pattern)
-    env.log.info('have_pathspec = %s', have_pathspec)
-
     if matching_pattern in ['fnmatch', '', None]:
         return FnmatchMatcher()
     elif matching_pattern == 'gitignore':
